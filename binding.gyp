@@ -7,9 +7,9 @@
                     "cflags!": ["-fno-exceptions"],
                     "cflags_cc!": ["-fno-exceptions"],
                     "sources": [
-                        "src/drivelist.cpp",
-                        "src/device-descriptor.cpp",
-                        "src/windows/list.cpp"
+                        "lib/drivelist.cpp",
+                        "lib/device-descriptor.cpp",
+                        "lib/windows/list.cpp"
                     ],
                     "libraries": [
                         "-lKernel32.lib",
