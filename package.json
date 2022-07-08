@@ -26,8 +26,18 @@
   "files": [
     "dist",
     "*.d.ts",
-    "lib"
+    "lib",
+    "bin",
+    "binding.gyp"
   ],
+  "bin": {
+    "drivelist-windows": "./bin/drivelist-windows.js"
+  },
+  "binary": {
+    "napi_versions": [
+      3
+    ]
+  },
   "scripts": {
     "install": "prebuild-install -r napi || node-gyp rebuild",
     "test": "vitest",
@@ -63,6 +73,7 @@
   "devDependencies": {
     "@suger-tdy/eslint-config": "1.1.6",
     "@types/bindings": "^1.5.1",
+    "@types/yargs": "^17.0.10",
     "bumpp": "8.2.1",
     "esbuild": "0.14.48",
     "eslint": "8.19.0",

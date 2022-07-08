@@ -9,6 +9,7 @@ importers:
     specifiers:
       '@suger-tdy/eslint-config': 1.1.6
       '@types/bindings': ^1.5.1
+      '@types/yargs': ^17.0.10
       bindings: ^1.5.0
       bumpp: 8.2.1
       esbuild: 0.14.48
@@ -33,6 +34,7 @@ importers:
     devDependencies:
       '@suger-tdy/eslint-config': 1.1.6_4x5o4skxv6sl53vpwefgt23khm
       '@types/bindings': 1.5.1
+      '@types/yargs': 17.0.10
       bumpp: 8.2.1
       esbuild: 0.14.48
       eslint: 8.19.0
@@ -587,6 +589,16 @@ packages:
 
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
+    dev: true
+
+  /@types/yargs-parser/21.0.0:
+    resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
+    dev: true
+
+  /@types/yargs/17.0.10:
+    resolution: {integrity: sha512-gmEaFwpj/7f/ROdtIlci1R1VYU1J4j95m8T+Tj3iBgiBFKg1foE/PSl93bBd5T9LDXNPo8UlNN6W0qwD8O5OaA==}
+    dependencies:
+      '@types/yargs-parser': 21.0.0
     dev: true
 
   /@typescript-eslint/eslint-plugin/5.29.0_hyhkoiy62keebsro2cuewzwyme:
