@@ -1,5 +1,7 @@
 import { expect, it } from 'vitest'
+import { list } from '@'
 
-it('runs', () => {
-  expect(true).toBe(true)
+it('runs', async() => {
+  const ans = await list()
+  expect(ans.length).toBeDefined()
 })

@@ -6,7 +6,7 @@
   "keywords": [
     "drivelist-windows"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "tangdaoyuan <1197633750@qq.com> (https://github.com/tangdaoyuan/)",
   "repository": {
     "type": "git",
@@ -25,9 +25,11 @@
   },
   "files": [
     "dist",
-    "*.d.ts"
+    "*.d.ts",
+    "lib"
   ],
   "scripts": {
+    "install": "prebuild-install -r napi || node-gyp rebuild",
     "test": "vitest",
     "test:run": "vitest run",
     "typecheck": "tsc --noEmit",
@@ -38,17 +40,34 @@
     "stub": "unbuild --stub",
     "build": "unbuild",
     "prepublishOnly": "pnpm run build",
-    "release": "bumpp --tag --commit --push && pnpm publish"
+    "release": "bumpp --tag --commit --push && pnpm publish",
+    "configure": "node-gyp configure",
+    "build:lib": "node-gyp rebuild",
+    "prebuild": "prebuild -r napi --verbose",
+    "upload": "prebuild -r napi --upload ${GITHUB_TOKEN}"
   },
   "bugs": {
     "url": "https://github.com/tangdaoyuan/drivelist-windows/issues"
   },
   "homepage": "https://github.com/tangdaoyuan/drivelist-windows#readme",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^5.0.0",
+    "picocolors": "^1.0.0",
+    "prebuild-install": "^7.1.1",
+    "yargs": "^17.5.1"
+  },
+  "resolutions": {
+    "node-gyp": "^9.0.0"
+  },
   "devDependencies": {
     "@suger-tdy/eslint-config": "1.1.6",
+    "@types/bindings": "^1.5.1",
     "bumpp": "8.2.1",
     "esbuild": "0.14.48",
     "eslint": "8.19.0",
+    "node-gyp": "^9.0.0",
+    "prebuild": "^11.0.3",
     "tsx": "3.7.1",
     "typescript": "4.7.4",
     "unbuild": "0.7.4",
