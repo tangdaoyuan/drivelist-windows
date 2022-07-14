@@ -56,6 +56,9 @@
     "prebuild": "prebuild -r napi --verbose",
     "upload": "prebuild -r napi --upload ${GITHUB_TOKEN}"
   },
+  "os": [
+    "win32"
+  ],
   "bugs": {
     "url": "https://github.com/tangdaoyuan/drivelist-windows/issues"
   },
