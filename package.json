@@ -28,7 +28,8 @@
     "*.d.ts",
     "lib",
     "bin",
-    "binding.gyp"
+    "binding.gyp",
+    "scripts"
   ],
   "bin": {
     "drivelist-windows": "./bin/drivelist-windows.js"
