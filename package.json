@@ -39,7 +39,8 @@
     ]
   },
   "scripts": {
-    "install": "prebuild-install -r napi || node-gyp rebuild",
+    "install": "node ./scripts/run.js",
+    "preRebuild": "prebuild-install -r napi || node-gyp rebuild",
     "test": "vitest",
     "test:run": "vitest run",
     "typecheck": "tsc --noEmit",
@@ -56,9 +57,6 @@
     "prebuild": "prebuild -r napi --verbose",
     "upload": "prebuild -r napi --upload ${GITHUB_TOKEN}"
   },
-  "os": [
-    "win32"
-  ],
   "bugs": {
     "url": "https://github.com/tangdaoyuan/drivelist-windows/issues"
   },
