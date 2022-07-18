@@ -18,17 +18,11 @@ function pacakgerManager() {
   let packageManager = 'npm'
   try {
     execSync(`${where()} pnpm`)
+    execSync('pnpm -v')
     packageManager = 'pnpm'
   }
   catch (e) {
-    try {
-      console.info('Installing Pnpm...')
-      execSync('npm install -g pnpm')
-      packageManager = 'pnpm'
-    }
-    catch (error) {
-      console.info('Pnpm installed failed.')
-    }
+    console.error(e)
   }
   return packageManager
 }
