@@ -98,6 +98,7 @@ jobs:
         run: pnpm install
 
       - name: Prebuild
-        run: pnpm upload
+        run: |
+          pnpm upload --upload "$env:PREBUILD_TOKEN"
         env:
           PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
