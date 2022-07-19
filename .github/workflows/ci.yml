@@ -116,8 +116,7 @@ jobs:
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3.3.0
         with:
-          node-version: 16.x
-          cache: pnpm
+          node-version: 16.0.0
 
       - name: Install
         run: pnpm install
