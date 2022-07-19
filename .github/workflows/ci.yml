@@ -119,6 +119,7 @@ jobs:
 
       - name: Prebuild
         run: |
+          npm install node-gyp -g
           npm config set msvs_version "$env:msvs_version"
           npm run prebuild-electron -- --platform win32 --upload "$env:PREBUILD_TOKEN"
         env:
