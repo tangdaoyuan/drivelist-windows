@@ -20,6 +20,9 @@
                         "<!@(node -p \"require('node-addon-api').include\")",
                         "."
                     ],
+                    'variables': {
+                        'openssl_fips': '',
+                    },
                     'dependencies': ["<!(node -p \"require('node-addon-api').gyp\")"],
                     "msvs_settings": {
                         "VCLinkerTool": {
