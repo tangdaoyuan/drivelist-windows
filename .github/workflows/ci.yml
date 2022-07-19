@@ -114,6 +114,9 @@ jobs:
         with:
           node-version: 12.0.0
 
+      - name: Install
+        run: npm install
+
       - name: Prebuild
         run: |
           npm run prebuild-electron -- --platform win32 --upload "$env:PREBUILD_TOKEN"
