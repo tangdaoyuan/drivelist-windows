@@ -7,105 +7,80 @@ on:
     branches: [main]
 
 jobs:
-  # lint:
-  #   runs-on: windows-latest
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - name: Setup PNPM
-  #       uses: pnpm/action-setup@v2.2.2
-
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v3.3.0
-  #       with:
-  #         node-version: 16.x
-  #         cache: pnpm
-
-  #     - name: Install
-  #       run: pnpm install
-
-  #     - name: Lint
-  #       run: pnpm run lint
-
-  # typecheck:
-  #   runs-on: windows-latest
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - name: Setup PNPM
-  #       uses: pnpm/action-setup@v2.2.2
-
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v3.3.0
-  #       with:
-  #         node-version: 16.x
-  #         cache: pnpm
-
-  #     - name: Install
-  #       run: pnpm install
-
-  #     - name: TypeCheck
-  #       run: pnpm run typecheck
-
-  # test:
-  #   runs-on: ${{ matrix.os }}
-
-  #   strategy:
-  #     matrix:
-  #       node-version: [14.x, 16.x, 18.x]
-  #       os: [windows-latest]
-  #     fail-fast: false
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - name: Setup PNPM
-  #       uses: pnpm/action-setup@v2.2.2
-
-  #     - name: Use Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v3.3.0
-  #       with:
-  #         node-version: ${{ matrix.node-version }}
-  #         cache: pnpm
-
-  #     - name: Install
-  #       run: pnpm install
-
-  #     - name: Build
-  #       run: pnpm build:lib
-
-  #     - name: Unit Test
-  #       run: pnpm run test:run
-  # prebuild:
-  #   runs-on: windows-latest
-  #   needs: [lint, typecheck, test]
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - name: Setup PNPM
-  #       uses: pnpm/action-setup@v2.2.2
-
-  #     - name: Use Node.js 16.x
-  #       uses: actions/setup-node@v3.3.0
-  #       with:
-  #         node-version: 16.x
-  #         cache: pnpm
-
-  #     - name: Install
-  #       run: pnpm install
-
-  #     - name: Prebuild
-  #       run: |
-  #         pnpm upload --upload "$env:PREBUILD_TOKEN"
-  #       env:
-  #         PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
-
-  prebuild-electron:
+  lint:
     runs-on: windows-latest
-    # needs: [lint, typecheck, test]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: 16.x
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm run lint
+
+  typecheck:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: 16.x
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install
+
+      - name: TypeCheck
+        run: pnpm run typecheck
+
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+        os: [windows-latest]
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build:lib
+
+      - name: Unit Test
+        run: pnpm run test:run
+  prebuild:
+    runs-on: windows-latest
+    needs: [lint, typecheck, test]
 
     steps:
       - uses: actions/checkout@v3
@@ -116,15 +91,14 @@ jobs:
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3.3.0
         with:
-          node-version: 16.0.0
+          node-version: 16.x
+          cache: pnpm
 
       - name: Install
         run: pnpm install
 
       - name: Prebuild
         run: |
-          pnpm prebuild-electron --platform win32 --upload "$env:PREBUILD_TOKEN"
-          pnpm prebuild-electron --platform linux --upload "$env:PREBUILD_TOKEN"
-          pnpm prebuild-electron --platform darwin --upload "$env:PREBUILD_TOKEN"
+          pnpm upload --upload "$env:PREBUILD_TOKEN"
         env:
           PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
