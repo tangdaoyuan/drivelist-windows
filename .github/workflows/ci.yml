@@ -122,3 +122,4 @@ jobs:
           npm run prebuild-electron -- --platform win32 --upload "$env:PREBUILD_TOKEN"
         env:
           PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
+          msvs_version: 2022
