@@ -102,3 +102,28 @@ jobs:
           pnpm upload --upload "$env:PREBUILD_TOKEN"
         env:
           PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
+
+  prebuild-electron:
+    runs-on: windows-latest
+    needs: [lint, typecheck, test]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.2
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: 16.x
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install
+
+      - name: Prebuild
+        run: |
+          pnpm prebuild-electron --upload "$env:PREBUILD_TOKEN"
+        env:
+          PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}

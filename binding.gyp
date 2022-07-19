@@ -16,9 +16,6 @@
                         "-lShell32.lib",
                         "-lSetupAPI.lib"
                     ],
-                    "defines": [
-                        "NAPI_VERSION=<(napi_build_version)"
-                    ],
                     'include_dirs': [
                         "<!@(node -p \"require('node-addon-api').include\")",
                         "."
