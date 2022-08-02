@@ -55,7 +55,7 @@
     "release": "bumpp --tag --commit --push && pnpm publish",
     "configure": "node-gyp configure",
     "build:lib": "node-gyp rebuild",
-    "prebuild-electron": "prebuild -r electron -t 5.0.13",
+    "prebuild-electron": "prebuild -r electron -t 9.0.10",
     "prebuild": "prebuild -r napi --verbose",
     "upload": "prebuild -r napi"
   },

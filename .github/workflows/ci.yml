@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, prebuild-electron]
   pull_request:
     branches: [main]
 
@@ -78,9 +78,15 @@ jobs:
 
       - name: Unit Test
         run: pnpm run test:run
-  prebuild:
-    runs-on: windows-latest
+
+  prebuild-electron:
+    runs-on: ${{ matrix.os }}
     needs: [lint, typecheck, test]
+
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v3
@@ -88,10 +94,10 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/action-setup@v2.2.2
 
-      - name: Use Node.js 16.x
+      - name: Use Node.js 16.14.x
         uses: actions/setup-node@v3.3.0
         with:
-          node-version: 16.x
+          node-version: 16.14.x
           cache: pnpm
 
       - name: Install
@@ -99,6 +105,7 @@ jobs:
 
       - name: Prebuild
         run: |
+          pnpm prebuild-electron
           pnpm upload --upload "$env:PREBUILD_TOKEN"
         env:
           PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
