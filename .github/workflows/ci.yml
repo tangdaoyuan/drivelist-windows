@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3.3.0
         with:
-          node-version: 16.x
+          node-version: 16.14.x
           cache: pnpm
 
       - name: Install
@@ -40,7 +40,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3.3.0
         with:
-          node-version: 16.x
+          node-version: 16.14.x
           cache: pnpm
 
       - name: Install
@@ -54,7 +54,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.14.x]
         os: [windows-latest]
       fail-fast: false
 
@@ -81,7 +81,7 @@ jobs:
 
   prebuild-electron:
     runs-on: ${{ matrix.os }}
-    needs: [lint, typecheck, test]
+    # needs: [lint, typecheck, test]
 
     strategy:
       matrix:
@@ -101,7 +101,7 @@ jobs:
           cache: pnpm
 
       - name: Install
-        run: pnpm install
+        run: pnpm install --openssl_fips=''
 
       - name: Prebuild
         run: |
