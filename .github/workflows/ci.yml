@@ -81,7 +81,7 @@ jobs:
 
   prebuild-electron-win:
     runs-on: ${{ matrix.os }}
-    # needs: [lint, typecheck, test]
+    needs: [lint, typecheck, test]
 
     strategy:
       matrix:
@@ -114,7 +114,7 @@ jobs:
 
   prebuild-electron-other:
     runs-on: ${{ matrix.os }}
-    # needs: [lint, typecheck, test]
+    needs: [lint, typecheck, test]
 
     strategy:
       matrix:
