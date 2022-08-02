@@ -1,4 +1,7 @@
 {
+    "variables": {
+        "openssl_fips": "",
+    },
     "targets": [
         {
             "target_name": "drivelist-windows",
@@ -17,7 +20,7 @@
                         "-lSetupAPI.lib"
                     ],
                     "defines": [
-                        "NAPI_VERSION=<(napi_build_version)"
+                        "NAPI_VERSION=3"
                     ],
                     'include_dirs': [
                         "<!@(node -p \"require('node-addon-api').include\")",
