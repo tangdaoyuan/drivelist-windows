@@ -105,7 +105,6 @@ jobs:
 
       - name: Prebuild
         run: |
-          pnpm prebuild-electron
-          pnpm upload --upload "$env:PREBUILD_TOKEN"
+          pnpm prebuild-electron --upload "$env:PREBUILD_TOKEN"
         env:
           PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
