@@ -5,9 +5,6 @@
     "targets": [
         {
             "target_name": "drivelist-windows",
-            "variables": {
-                "openssl_fips": "",
-            },
             "conditions": [
                 ['OS=="win"', {
                     "cflags!": ["-fno-exceptions"],

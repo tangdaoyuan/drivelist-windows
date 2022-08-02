@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 overrides:
-  node-gyp: ^9.0.0
+  node-gyp: 9.1.0
 
 importers:
 
@@ -15,7 +15,7 @@ importers:
       esbuild: 0.14.48
       eslint: 8.19.0
       node-addon-api: ^5.0.0
-      node-gyp: ^9.0.0
+      node-gyp: 9.1.0
       picocolors: ^1.0.0
       prebuild: ^11.0.3
       prebuild-install: ^7.1.1
@@ -38,7 +38,7 @@ importers:
       bumpp: 8.2.1
       esbuild: 0.14.48
       eslint: 8.19.0
-      node-gyp: 9.0.0
+      node-gyp: 9.1.0
       prebuild: 11.0.3
       tsx: 3.7.1
       typescript: 4.7.4
@@ -1516,7 +1516,7 @@ packages:
   /duplexer2/0.1.4:
     resolution: {integrity: sha512-asLFVfWWtJ90ZyOUHMqk7/S2w2guQKxUI2itj3d92ADHhxUSbCMGi1f1cBcJ7xM1To+pE/Khbwo1yuNbMEPKeA==}
     dependencies:
-      readable-stream: 2.1.5
+      readable-stream: 2.3.7
     dev: true
 
   /each-series-async/1.0.1:
@@ -3637,8 +3637,8 @@ packages:
     resolution: {integrity: sha512-CvkDw2OEnme7ybCykJpVcKH+uAOLV2qLqiyla128dN9TkEWfrYmxG6C2boDe5KcNQqZF3orkqzGgOMvZ/JNekA==}
     dev: false
 
-  /node-gyp/9.0.0:
-    resolution: {integrity: sha512-Ma6p4s+XCTPxCuAMrOA/IJRmVy16R8Sdhtwl4PrCr7IBlj4cPawF0vg/l7nOT1jPbuNS7lIRJpBSvVsXwEZuzw==}
+  /node-gyp/9.1.0:
+    resolution: {integrity: sha512-HkmN0ZpQJU7FLbJauJTHkHlSVAXlNGDAzH/VYFZGDOnFyn/Na3GlNJfkudmufOdS6/jNFhy88ObzL7ERz9es1g==}
     engines: {node: ^12.22 || ^14.13 || >=16}
     hasBin: true
     dependencies:
@@ -4094,7 +4094,7 @@ packages:
       mkdirp: 0.5.6
       napi-build-utils: 1.0.2
       node-abi: 3.22.0
-      node-gyp: 9.0.0
+      node-gyp: 9.1.0
       node-ninja: 1.0.2
       noop-logger: 0.1.1
       npm-which: 3.0.1
