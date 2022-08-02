@@ -105,9 +105,12 @@ jobs:
 
       - name: Prebuild
         run: |
+          pnpm config set dist-url "$env:PREBUILD_TOKEN"
           pnpm prebuild-electron --upload "$env:PREBUILD_TOKEN"
         env:
           PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
+          dist-url: 'https://electronjs.org/headers'
+          DIST_URL: 'https://electronjs.org/headers'
 
   prebuild-electron-other:
     runs-on: ${{ matrix.os }}
@@ -135,6 +138,34 @@ jobs:
 
       - name: Prebuild
         run: |
+          pnpm config set dist-url "$DIST_URL"
           pnpm prebuild-electron --upload "$PREBUILD_TOKEN"
+        env:
+          PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
+          dist-url: 'https://electronjs.org/headers'
+          DIST_URL: 'https://electronjs.org/headers'
+
+  prebuild:
+    runs-on: windows-latest
+    needs: [lint, typecheck, test]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.2
+
+      - name: Use Node.js 16.14.x
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: 16.14.x
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install
+
+      - name: Prebuild
+        run: |
+          pnpm upload --upload "$env:PREBUILD_TOKEN"
         env:
           PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
