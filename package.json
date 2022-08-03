@@ -55,9 +55,9 @@
     "release": "bumpp --tag --commit --push && pnpm publish",
     "configure": "node-gyp configure",
     "build:lib": "node-gyp rebuild",
-    "prebuild-electron": "prebuild -r electron -t 19.0.0",
-    "prebuild": "prebuild -r napi --verbose",
-    "upload": "prebuild -r napi"
+    "prebuild-electron": "prebuild -r electron -t 19.0.0 --verbose",
+    "prebuild-node": "prebuild -r napi --verbose",
+    "prebuild-upload": "prebuild --upload-all"
   },
   "bugs": {
     "url": "https://github.com/tangdaoyuan/drivelist-windows/issues"
