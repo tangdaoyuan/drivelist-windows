@@ -2,7 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, prebuild-electron]
+    branches: [main]
+    tags:
+      - v*
   pull_request:
     branches: [main]
 
@@ -79,75 +81,15 @@ jobs:
       - name: Unit Test
         run: pnpm run test:run
 
-  prebuild-electron-win:
-    runs-on: ${{ matrix.os }}
-    needs: [lint, typecheck, test]
-
-    strategy:
-      matrix:
-        os: [windows-latest]
-      fail-fast: false
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2.2.2
-
-      - name: Use Node.js 16.14.x
-        uses: actions/setup-node@v3.3.0
-        with:
-          node-version: 16.14.x
-          cache: pnpm
-
-      - name: Install
-        run: pnpm install
-
-      - name: Prebuild
-        run: |
-          pnpm config set dist-url "$env:DIST_URL"
-          pnpm prebuild-electron --upload "$env:PREBUILD_TOKEN"
-        env:
-          PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
-          dist-url: 'https://electronjs.org/headers'
-          DIST_URL: 'https://electronjs.org/headers'
-
-  prebuild-electron-other:
-    runs-on: ${{ matrix.os }}
-    needs: [lint, typecheck, test]
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-      fail-fast: false
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2.2.2
-
-      - name: Use Node.js 16.14.x
-        uses: actions/setup-node@v3.3.0
-        with:
-          node-version: 16.14.x
-          cache: pnpm
-
-      - name: Install
-        run: pnpm install
-
-      - name: Prebuild
-        run: |
-          pnpm config set dist-url "$DIST_URL"
-          pnpm prebuild-electron --upload "$PREBUILD_TOKEN"
-        env:
-          PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
-          dist-url: 'https://electronjs.org/headers'
-          DIST_URL: 'https://electronjs.org/headers'
-
   prebuild:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
     needs: [lint, typecheck, test]
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        arch: [x64]
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v3
@@ -155,17 +97,60 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/action-setup@v2.2.2
 
-      - name: Use Node.js 16.14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v3.3.0
         with:
-          node-version: 16.14.x
+          node-version: 16.x
           cache: pnpm
 
       - name: Install
         run: pnpm install
 
-      - name: Prebuild
+      - name: Prebuild Electron
         run: |
-          pnpm upload --upload "$env:PREBUILD_TOKEN"
+          pnpm run prebuild-electron
+
+      - name: Prebuild Node
+        run: |
+          pnpm run prebuild-node
+
+      - name: Upload Prebuilt Binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: prebuilds-${{ matrix.os }}-${{ matrix.arch }}
+          path: prebuilds
+
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+    needs: [prebuild]
+    environment: NPM
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.2
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version: 16.x
+          cache: pnpm
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install
+        run: pnpm install
+
+      - name: Download Prebuilt Binaries
+        uses: actions/download-artifact@v3
+        with:
+          path: prebuilds
+
+      - name: Publish to NPM
+        run: pnpm publish --no-git-checks
         env:
-          PREBUILD_TOKEN: ${{ secrets.PREBUILD_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Upload Prebuilt Artifacts to GitHub Release
+        run: pnpm run prebuild-upload ${{ secrets.PREBUILD_TOKEN }}
