@@ -52,7 +52,7 @@
     "stub": "unbuild --stub",
     "build": "unbuild",
     "prepublishOnly": "pnpm run build",
-    "release": "bumpp --tag --commit --push && pnpm publish",
+    "release": "bumpp --tag --commit --push",
     "configure": "node-gyp configure",
     "build:lib": "node-gyp rebuild",
     "prebuild-electron": "prebuild -r electron -t 19.0.0 --verbose",
